@@ -22,7 +22,8 @@ git branch -M main
 git push -u origin main
 
 ### HA ÍGY NEM MEGY
-git add <file vagy folder neve>
+git add "file vagy folder neve"
+  
   HA MINDENKIT FELRAKTAM
 
   git commit -m "description"
