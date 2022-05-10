@@ -1,6 +1,6 @@
-package vizsgagyakorlo;
+package main;
 
-public class VizsgaGyakorlo {
+public class Program {
 
     public static void main(String[] args) {
         
