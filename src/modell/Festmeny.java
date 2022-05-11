@@ -1,60 +1,50 @@
 package modell;
 
 import java.io.File;
-import java.util.Comparator;
+import java.io.Serializable;
+import static java.lang.Integer.parseInt;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
-class KeszitoComparator implements Comparator<Festmeny> {
-
-    @Override
-    public int compare(Festmeny o1, Festmeny o2) {
-        return o1.getKeszito().compareTo(o2.getKeszito());
-    }
-
-}
-
-public class Festmeny extends KiallitasiTargy implements Comparable<Festmeny>{
-    private String utvonal;
+public class Festmeny extends KiallitasiTargy implements Serializable{
+    private File utvonal;
     
-    public Festmeny(Date datum, String keszito, String cim) {
-        super(datum, keszito, cim);
-        this.utvonal = "";
+    public Festmeny(String keszito, String cim) throws HibasDatumException {
+        this(new File("nincs"), keszito, cim);
     }
 
-    public Festmeny(String utvonal, Date datum, String keszito, String cim) {
+    public Festmeny(File utvonal, String keszito, String cim) throws HibasDatumException {
+        this(utvonal, LocalDate.now(), keszito, cim);
+    }
+
+    public Festmeny(LocalDate letrehozas, String keszito, String cim) throws HibasDatumException {
+        this(new File("nincs"), letrehozas, keszito, cim);
+    }
+    
+    public Festmeny(File utvonal, LocalDate datum, String keszito, String cim) throws HibasDatumException {
         super(datum, keszito, cim);
         this.utvonal = utvonal;
     }
-
-    public Festmeny(String utvonal, String keszito, String cim) {
-        super(keszito, cim);
-        this.utvonal = utvonal;
-    }
     
-    public Festmeny(String keszito, String cim) {
-        super(keszito, cim);
-        this.utvonal = "";
-    }
-
-    public String getUtvonal() {
-        return utvonal;
-    }
+//    SimpleDateFormat formatter2=new SimpleDateFormat("dd-MMM-yyyy");  
+//    public Festmeny(String sor) throws HibasDatumException{
+//        this(new File(sor.split(";")[0]), LocalDate.parse(sor.split(";")[1]), sor.split(";")[2], sor.split(";")[3]);
+//    }
     
-    public void megjelenit(Festmeny festmeny) {
-        File myObj = new File(festmeny.getUtvonal());
-        if (myObj.exists()) {
+    public void megjelenites(){
+        if(utvonal.exists()){
             System.out.println("Megjelenítés folyamatban...");
-        } else {
-            System.out.println("Nem lehet megjeleníteni!");
+        }else{
+            System.out.println("Nem lehet megjeleníteni");
         }
     }
 
     @Override
-    public int compareTo(Festmeny o) {
-        return this.getCim().compareTo(o.getCim());
+    public String toString() {
+        String os = super.toString();
+        return os + "Festmeny{" + "utvonal=" + utvonal + '}';
     }
     
-    public static KeszitoComparator KeszitoRendezo() {
-        return new KeszitoComparator();
-    }
+    
 }
